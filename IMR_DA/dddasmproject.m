@@ -6,7 +6,7 @@
 % Spratt et al. (2020). Depending on which data assimilation method and
 % physical model is used, parameters from different sections below must be
 % specified
-
+close all
 clear all
 clc
 
@@ -19,30 +19,16 @@ clc
 data_type = 'exp'; % 'sim' or 'exp'
 data_set = 'SoftPA_nobeads';
 data_filepath = (['example_data/']);
-data_filename = 'A_E2_002.mat'; % name of file containing R vs T data
-%dataset = 2; % data set number (if needed - old data format)
+data_filename = 'PolyAcry_12_48_08_updated.mat'; % name of file containing R vs T data
 num_peaks = 2; % number of 'peaks' to assimilate in radius data
                % (peaks = collapse points as in Estrada paper)
 
+               
+               
 %% Data assimilation parameters
 
-method = 'En4D'; % data assimilation method ('En4D','EnKS',('EnKF'))
+method = 'EnKS'; % data assimilation method ('En4D','EnKS',('EnKF'))
 
-% Initial parameter guesses (all must be specified even if not used, in
-% order to run)
-%{
-G_guess = 3000;
-G1_guess = 1e9;
-mu_guess = 0.2;
-alpha_guess = 0.1;
-lambda_nu_guess = 0.1;
-%
-G_guess = 2120;
-G1_guess = 1e9;
-mu_guess = 0.118;
-alpha_guess = 0.1;
-lambda_nu_guess = 0.1;
-%}
 G_guess = 500;
 G1_guess = 1e9;
 mu_guess = 0.05;
@@ -68,13 +54,13 @@ end
 
 %% Modeling parameters
 model = 'neoHook'; % 'neoHook','nhzen','sls','linkv','fung','fung2','fungexp','fungnlvis'
-NT = 120; % Amount of nodes inside the bubble
-NTM = 120; % Amount of nodes outside the bubble
+NT = 30; % Amount of nodes inside the bubble
+NTM = 30; % Amount of nodes outside the bubble
 Pext_type = 'IC'; % Type of external forcing
 ST = 0.056; % (N/m) Liquid Surface Tension
 
 Tgrad = 1; % Thermal effects inside bubble
-Tmgrad = 1; % Thermal effects outside bubble
+Tmgrad = 0; % Thermal effects outside bubble
 Cgrad = 1; % Vapor diffusion effects
 comp = 1; % Activates the effect of compressibility (0=Rayleigh-Plesset, 1=Keller-Miksis)
 disp_timesteps = 1; % displays timesteps in En4D run (for debugging)
@@ -113,22 +99,7 @@ Despread = 0; % set to 0 if not used in model
 alphaspread = 0.3; % set to 0 if not used in model
 lambda_nuspread = 0; % set to 0 if not used in model
 %}
-%{
-Rspread = 0;
-Uspread = 0;
-Pspread = 0;
-Sspread = 0;
-tauspread = 0;
-Cspread = 0;
-Tmspread = 0;
-Brspread = 0;
-fohspread = 0;
-Caspread = 0;
-Respread = 0;
-Despread = 0; % set to 0 if not used in model
-alphaspread = 0; % set to 0 if not used in model
-lambda_nuspread = 0; % set to 0 if not used in model
-%}
+
 
 %% Do not modify
 visco_params = struct('G',G_guess,'G1',G1_guess,'mu',mu_guess, ...

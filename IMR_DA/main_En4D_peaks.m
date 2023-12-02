@@ -113,7 +113,7 @@ for j = 1
             %kk
             t1 = t(time_index+kk-1)/t0;
             t2 = t(time_index+kk)/t0;
-            parfor memb = 1:q
+            for memb = 1:q
                 [EE(:,memb),tau_del{memb}] = f(t1,t2,E2(:,memb,kk-1),vars,tau_del{memb});
             end
             E2(:,:,kk) = EE;

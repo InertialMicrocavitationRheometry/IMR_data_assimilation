@@ -40,11 +40,11 @@ options = odeset('RelTol',1e-3);
 %[~ ,X] = ode23tb(@bubble, [ti_star tf_star], xi(1:end-2)',options);
 [~ ,X] = ode23tb(@bubble, [ti_star tf_star], xi(1:2*NT+NTM+4)');
 
+X(end,:)
 xf = [X(end,:)';Br;foh;xi(2*NT+NTM+7:end)];
 xf(3) = log(xf(3));
 
 
-%%
 %*************************************************************************
 % Nested function; ODE Solver calls to march governing equations in time
 % This function has acess to all parameters above

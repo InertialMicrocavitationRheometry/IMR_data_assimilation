@@ -151,10 +151,10 @@ save(['./results/',data_filename(1:8),'_',method, ...
     'peaks',datestr(now),'.mat'],'-v7.3')
 %}
 %% Plotting
-%{
+
 if method == 'En4D'
     plot_En4D_exp
 elseif method == 'EnKS'
     plot_Kalman_exp
 end
-%}
+

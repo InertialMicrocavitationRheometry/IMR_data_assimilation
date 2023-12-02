@@ -1,0 +1,11 @@
+%function [y] = h(xk) % original h function
+function [y] = h(xk_exp,xk_imrv2)
+%returns radii (observed variable) from ensemble
+
+%y = [xk(1,:)]; original y
+y = [xk_exp(1,:),]
+
+%y = xk(1:4,:);
+%y = [xk(1,:);xk(4,:)];
+end
+
