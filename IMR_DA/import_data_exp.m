@@ -30,9 +30,10 @@ peak_time = peak_indices(num_peaks);
 %% new data format
 exp_data = load([data_filepath,data_filename]);
 %Rnew = exp_data.R;
-Rnew = exp_data.PolyAcry_12_48_08(:,2)';
+%Rnew = exp_data.PolyAcry_12_48_08(:,2)';
+Rnew = exp_data.M(:,2);
 %t = exp_data.t;
-t = exp_data.PolyAcry_12_48_08(:,1)';
+t = exp_data.M(:,1);
 
 % fixing shape if needed
 if length(Rnew(1,:)) == 1
@@ -62,7 +63,7 @@ yth = yth(1:kk-1);
 t = t(1:kk-1);
 %
 
-tspan = t(end)-t(1);
+tspan = t(end)-t(1);%1;
 n = length(t)-1;
 
 if exist('l') == 0
