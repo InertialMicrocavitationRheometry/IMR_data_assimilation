@@ -19,7 +19,7 @@ clc
 data_type = 'exp'; % 'sim' or 'exp'
 data_set = 'SoftPA_nobeads';
 data_filepath = (['example_data/']);
-data_filename = 'PolyAcry_12_48_08_updated.mat'; % name of file containing R vs T data
+data_filename = 'experimental_average.mat'; % name of file containing R vs T data
 num_peaks = 2; % number of 'peaks' to assimilate in radius data
                % (peaks = collapse points as in Estrada paper)
 
@@ -45,7 +45,7 @@ max_iter = 5; % max # of iterations until end optimization (5 to 10 is usually g
 
 % IEnKS only:
 if method == 'EnKS'
-    l = 3; %lag of smoother
+    l = 1; %lag of smoother
 end
 
 % Note: Beta coefficients are fixed as equal here. They can be modified in
@@ -123,9 +123,9 @@ save(['./results/',data_filename(1:8),'_',method, ...
 %}
 %% Plotting
 
-if method == 'En4D'
-    plot_En4D_exp
-elseif method == 'EnKS'
-    plot_Kalman_exp
-end
+% if method == 'En4D'
+%     plot_En4D_exp
+% elseif method == 'EnKS'
+%     plot_Kalman_exp
+% end
 

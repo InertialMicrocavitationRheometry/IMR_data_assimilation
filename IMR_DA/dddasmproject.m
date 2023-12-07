@@ -19,7 +19,7 @@ clc
 data_type = 'exp'; % 'sim' or 'exp'
 data_set = 'SoftPA_nobeads';
 data_filepath = (['example_data/']);
-data_filename = 'normalized_unscaled_Experimental_Data_10PA_.06BIS.mat'; % name of file containing R vs T data
+data_filename = 'normalized_unscaled_Experimental_Data_10PA_.06BIS.mat'; %'PolyAcry_12_48_08_updated.mat';% name of file containing R vs T data
 num_peaks = 2; % number of 'peaks' to assimilate in radius data
                % (peaks = collapse points as in Estrada paper)
 
@@ -27,7 +27,7 @@ num_peaks = 2; % number of 'peaks' to assimilate in radius data
                
 %% Data assimilation parameters
 
-method = 'En4D'; % data assimilation method ('En4D','EnKS',('EnKF'))
+method = 'EnKS'; % data assimilation method ('En4D','EnKS',('EnKF'))
 
 G_guess = 500;
 G1_guess = 1e9;
@@ -45,7 +45,7 @@ max_iter = 5; % max # of iterations until end optimization (5 to 10 is usually g
 
 % IEnKS only:
 if method == 'EnKS'
-    l = 3; %lag of smoother
+    l = 1   ; %lag of smoother
 end
 
 % Note: Beta coefficients are fixed as equal here. They can be modified in
@@ -54,8 +54,8 @@ end
 
 %% Modeling parameters
 model = 'neoHook'; % 'neoHook','nhzen','sls','linkv','fung','fung2','fungexp','fungnlvis'
-NT = 45; % Amount of nodes inside the bubble
-NTM = 45; % Amount of nodes outside the bubble
+NT = 30; % Amount of nodes inside the bubble
+NTM = 30; % Amount of nodes outside the bubble
 Pext_type = 'IC'; % Type of external forcing
 ST = 0.056; % (N/m) Liquid Surface Tension
 
