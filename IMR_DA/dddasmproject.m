@@ -27,7 +27,7 @@ num_peaks = 2; % number of 'peaks' to assimilate in radius data
                
 %% Data assimilation parameters
 
-method = 'EnKS'; % data assimilation method ('En4D','EnKS',('EnKF'))
+method = 'En4D'; % data assimilation method ('En4D','EnKS',('EnKF'))
 
 G_guess = 500;
 G1_guess = 1e9;
