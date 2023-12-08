@@ -144,9 +144,6 @@ muErrorTable.Properties.VariableNames = ColumnNames
 alphaErrorTable.Properties.VariableNames = ColumnNames
 %lambda_nuErrorTable.Properties.VariableNames = ColumnNames
 
-
-
-
 %disp(['run time: ',num2str(round(run_time)),' seconds or ', ...
 %    num2str(round(run_time/60)),' minutes'])
 
@@ -164,9 +161,6 @@ disp(['avg R error: ',num2str(avg_R_err),' (',num2str(avg_R_percent_err), ...
 
 disp(['NRMSE = ',num2str(NRMSE)])
 %% Plotting
-
-% R
-
 figure(1)
 clf
 

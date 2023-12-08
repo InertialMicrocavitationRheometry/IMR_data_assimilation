@@ -40,7 +40,7 @@ max_iter = 5; % max # of iterations until end optimization (5 to 10 is usually g
 
 % IEnKS only:
 if method == 'EnKS'
-    l = 1   ; %lag of smoother
+    l = 3   ; %lag of smoother
 end
 
 % Note: Beta coefficients are fixed as equal here. They can be modified in
