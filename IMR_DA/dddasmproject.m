@@ -18,20 +18,20 @@ data_type = 'exp'; % 'sim' or 'exp'
 data_set = 'SoftPA_nobeads';
 data_filepath = (['example_data/']);
 data_filename = 'normalized_unscaled_Experimental_Data_10PA_.06BIS.mat'; %'PolyAcry_12_48_08_updated.mat';% name of file containing R vs T data
-num_peaks = 10; % number of 'peaks' to assimilate in radius data
+num_peaks = 5; % number of 'peaks' to assimilate in radius data
                % (peaks = collapse points as in Estrada paper)
   
 % Data assimilation parameters
 method = 'EnKS'; % data assimilation method ('En4D','EnKS',('EnKF'))
 
-G_guess = 500;
+G_guess = 1.3E4;
 G1_guess = 1e9;
 mu_guess = 0.05;
 alpha_guess = 0.5;
 lambda_nu_guess = 0.1;
 %}
-q = 4;%48; % Number of ensemble members
-std = 0.01; % expected standard deviation of measurements;
+q = 8; %48; % Number of ensemble members
+std = 0.05; % expected standard deviation of measurements;
 init_scheme = 2; % leave as 2, initializes ensemble with truth + noise
 
 % The following are ending criteria for iterative optimization:
@@ -52,7 +52,7 @@ model = 'neoHook'; % 'neoHook','nhzen','sls','linkv','fung','fung2','fungexp','f
 NT = 30; % Amount of nodes inside the bubble
 NTM = 30; % Amount of nodes outside the bubble
 Pext_type = 'IC'; % Type of external forcing
-ST = 0.056; % (N/m) Liquid Surface Tension
+ST = 0.057; % (N/m) Liquid Surface Tension
 
 Tgrad = 1; % Thermal effects inside bubble
 Tmgrad = 0; % Thermal effects outside bubble
@@ -75,20 +75,17 @@ beta = 1.02; % additive covariance parameter (lambda in paper) (1.005 < beta < 1
 alpha = 0.005; % random noise in forecast step (only for EnKF)
 
 % Spread of parameters in the ensemble
-%Rspread = 0.02;
 Rspread = 0.01;
 Uspread = 0.001;
 Pspread = 0.1;
 Sspread = 0.1;
 tauspread = 0.1;
 Cspread = 0.001;
-Tmspread = 0;
-%Tmspread = 0.001;
+Tmspread = 0*0.0005;
 Brspread = 0.01;
 fohspread = 0.01;
-%Caspread = 0.3;
 Caspread = 0.1;
-Respread = 0.3;
+Respread = 0.2;
 Despread = 0; % set to 0 if not used in model
 alphaspread = 0; % set to 0 if not used in model
 lambda_nuspread = 0; % set to 0 if not used in model
@@ -100,8 +97,9 @@ visco_params = struct('G',G_guess,'G1',G1_guess,'mu',mu_guess, ...
 est_params = [];
 R = std^2; % Measurement error covariance
 
-% Run main for corresponding method:
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Run main for corresponding method:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if method == 'En4D'
     main_En4D_peaks
 elseif method == 'EnKS'
