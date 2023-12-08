@@ -159,10 +159,10 @@ avg_R_percent_err = mean(R_percent_err);
 RMSE = sqrt(mean(R_err.^2));
 NRMSE = RMSE/(mean(yth(1:j)))
 
-disp(['avg R error: ',num2str(avg_R_err),' (',num2str(avg_R_percent_err), ...
-    '%)']);
+%disp(['avg R error: ',num2str(avg_R_err),' (',num2str(avg_R_percent_err), ...
+%    '%)']);
 
-disp(['NRMSE = ',num2str(NRMSE)])
+%disp(['NRMSE = ',num2str(NRMSE)])
 %% Plotting
 
 % R

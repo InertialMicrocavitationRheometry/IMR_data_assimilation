@@ -34,5 +34,5 @@ xi(3,:) = log(xi(3,:));
 xi(3,:) = log(x0_true(3));
 %xi = [xi(1:2*NT+NTM+4,:);log(xi(2*NT+NTM+5:end,:))];
 xi = [xi(1:2*NT+NTM+6,:);log(xi(2*NT+NTM+7:2*NT+NTM+8,:));xi(end-2,:);log(xi(end-1,:));xi(end,:)]; % for now
-%% Other parameters to initialize
+%%% Other parameters to initialize
 x_est = zeros(N,n+1);

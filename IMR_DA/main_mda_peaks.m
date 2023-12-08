@@ -41,7 +41,6 @@ opts.SYM = true;
 % Pre-allocating memory:
 x2 = zeros(N,q,n+1);
 
-
 t = linspace(0,tspan,n+1);
 x(:,:,1) = xi;
 
@@ -114,9 +113,9 @@ for j = 1:(n-l+1)
             x2 = mean(E2(:,:,1),2);
             A2 = E2(:,:,1) - x2*ones(1,q);
             E2a = x2*ones(1,q) + A2*delta;
-            disp(['timestep ',num2str(j),'/',num2str(n-l+1), ...
-                ': norm(dx1) = ',num2str(norm(dx)),', ',num2str(jj), ...
-                ' iterations'])
+            %disp(['timestep ',num2str(j),'/',num2str(n-l+1), ...
+            %    ': norm(dx1) = ',num2str(norm(dx)),', ',num2str(jj), ...
+            %    ' iterations'])
             
             tau_del_f = tau_del;
         end

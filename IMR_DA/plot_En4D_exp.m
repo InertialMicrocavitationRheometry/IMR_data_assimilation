@@ -100,11 +100,11 @@ mu_plussigma = (P_inf*R0)./(Re_plussigma.*Uc);
 %%%% Other metrics to plot
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 R_err = abs(xf(1,:)-yth(1:time_index));
-avg_R_err = mean(R_err)
+avg_R_err = mean(R_err);
 R_percent_err = 100*(R_err./yth(1:time_index));
 avg_R_percent_err = mean(R_percent_err);
 RMSE = sqrt(mean(R_err.^2));
-NRMSE = RMSE/(mean(yth(1:time_index)))
+NRMSE = RMSE/(mean(yth(1:time_index)));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Plotting
@@ -126,6 +126,7 @@ xlabel('time step')
 ylabel('$\frac{R}{R_{max}}$')
 grid on
 set(gca,'fontsize',20)
+
 
 % % U, P, S evolution with final initial conditions
 % 

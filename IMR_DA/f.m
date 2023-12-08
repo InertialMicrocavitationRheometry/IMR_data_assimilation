@@ -61,10 +61,6 @@ xf(3) = log(xf(3));
         C = x((NT+5):(2*NT+4));
         Tm = x((2*NT+5):end);
         
-%         if (disptime == 1)
-%             disp(t/tspan_star);
-%         end
-        
         %*********Solves for boundary condition at the wall**************
         if (Tmgrad == 1)
             if t/tspan_star> 0.001
