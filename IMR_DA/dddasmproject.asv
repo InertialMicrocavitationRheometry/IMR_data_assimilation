@@ -22,7 +22,7 @@ num_peaks = 10; % number of 'peaks' to assimilate in radius data
                % (peaks = collapse points as in Estrada paper)
   
 % Data assimilation parameters
-method = 'EnKS'; % data assimilation method ('En4D','EnKS',('EnKF'))
+method = 'En4D'; % data assimilation method ('En4D','EnKS',('EnKF'))
 
 G_guess = 500;
 G1_guess = 1e9;
@@ -30,7 +30,7 @@ mu_guess = 0.05;
 alpha_guess = 0.5;
 lambda_nu_guess = 0.1;
 %}
-q = 4;%48; % Number of ensemble members
+q = 8;%48; % Number of ensemble members
 std = 0.01; % expected standard deviation of measurements;
 init_scheme = 2; % leave as 2, initializes ensemble with truth + noise
 
@@ -76,13 +76,13 @@ alpha = 0.005; % random noise in forecast step (only for EnKF)
 
 % Spread of parameters in the ensemble
 %Rspread = 0.02;
-Rspread = 0.01;
-Uspread = 0.001;
+Rspread = 0.;
+Uspread = 0.1;
 Pspread = 0.1;
 Sspread = 0.1;
 tauspread = 0.1;
 Cspread = 0.001;
-Tmspread = 0;
+Tmspread = 0.0005;
 %Tmspread = 0.001;
 Brspread = 0.01;
 fohspread = 0.01;

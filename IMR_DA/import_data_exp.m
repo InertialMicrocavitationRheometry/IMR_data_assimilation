@@ -16,13 +16,9 @@ end
 
 Rexp = Rnew;%*3.18e-4;%*1e-6;
 [R0,max_index] = max(Rexp);
-%yth = Rnew;
 yth = Rexp(max_index:end)./R0;
 t = t*R0/sqrt(101325/1060);
 t = t(max_index:end);
-
-% plot(t,yth,'k')
-plot(1:length(yth),yth,'rx','linewidth',2)
 
 kk = 1;
 for jj = 1:length(yth)
@@ -36,7 +32,7 @@ end
 yth = yth(1:kk-1);
 t = t(1:kk-1);
 
-tspan = t(end)-t(1)
+tspan = t(end)-t(1);
 n = length(t)-1;
 
 if exist('l') == 0

@@ -36,7 +36,7 @@ lambda_nu = xi(2*NT+NTM+11);
 xi(3) = exp(xi(3));
 xi(5+NT:4+(2*NT)) = max(xi(5+NT:4+(2*NT)),0);
 
-options = odeset('RelTol',1e-3);
+options = odeset('RelTol',1e-6);
 %[~ ,X] = ode23tb(@bubble, [ti_star tf_star], xi(1:end-2)',options);
 [~ ,X] = ode23tb(@bubble, [ti_star tf_star], xi(1:2*NT+NTM+4)');
 
