@@ -11,7 +11,7 @@ function [P]  = IMRcall_parameters(R0,G,G1,mu)
     B = 1.17e-2; %(W/m-K)Thermal Conductivity coeff
     D0 = 24.2e-6; %Diffusion Coeff m^2/s
     k = 1.4; % Ratio of Specific Heats 
-    S = 0.056; %0.056; % JY!!! % 0.056; % (N/m) Liquid Surface Tension 
+    S = 0.072; %0.056; % JY!!! % 0.056; % (N/m) Liquid Surface Tension 
     T_inf = 298.15; % (K) Far field temp. 
     P_inf = 101325; % (Pa) Atmospheric Pressure 
     rho = 1060; % (Kg/m^3) Liquid Density
@@ -25,10 +25,12 @@ function [P]  = IMRcall_parameters(R0,G,G1,mu)
     Dm = Km /(rho*Cp) ; % Thermal Diffusivity m^2/s 
     L = 2; % Strech variable to map domain outside the bubble
     L_heat = 2264.76e3; % (J/Kg) Latent heat of evaporation 
-    C = 1430;%1540;%1484; % sound speed (m/s)
+    C = 1510; %1430;%1540;%1484; % sound speed (m/s)
     
   % Intermidiate calculated variables
-  
+
+    R0old = R0;
+    R0 = 3.5E-4; % hard coding back the dimensional radius used for Mirelys code
     K_infy = A*T_inf+B; 
     Uc = sqrt(P_inf/rho);
     Pv = Pvsat(T_inf );
@@ -52,7 +54,6 @@ function [P]  = IMRcall_parameters(R0,G,G1,mu)
     Rv_star = Rv/Rnondim;
     Ra_star = Ra/Rnondim;
     P0_star = P0/P_inf;
-    t0 = R0/Uc;
     L_heat_star = L_heat/(Uc)^2;
     Km_star = Km/K_infy; 
     C_star = C/Uc; 
@@ -61,7 +62,8 @@ function [P]  = IMRcall_parameters(R0,G,G1,mu)
     Tgrad = 1; %1 Temperature transfer bt bubble and material
     Cgrad = 0; %1 Vapor-non-condensible gas diffusion
     Tmgrad = 0; %0 Off means cold liquid assumption
-    
+    R0 = R0old;
+	t0 = R0/Uc;
     P = [k chi fom foh Ca Re We Br A_star...
          B_star Rv_star Ra_star P0_star t0 C0 L L_heat_star Km_star ...
          P_inf  T_inf C_star De ...

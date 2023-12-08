@@ -14,7 +14,8 @@ rng('shuffle')
 % Find Req and calculate initial partial pressure
 %ST = 0.056; % (N/m) Liquid Surface Tension
 Pmt_temp = IMRcall_parameters(R0,G_guess,G1_guess,mu_guess); % Calls parameters script
-Ca = Pmt_temp(5); Re = Pmt_temp(6);
+Ca = Pmt_temp(5)
+Re = Pmt_temp(6);
 P_inf = Pmt_temp(19); T_inf = Pmt_temp(20);
 Req = mean(yth(end-5:end)); % take mean of end of sim to be Req
 P_guess = (P_inf + (2*ST)/(Req*R0) - Pvsat(T_inf))*(Req^3);

@@ -36,7 +36,7 @@ lambda_nu = xi(2*NT+NTM+11);
 xi(3) = exp(xi(3));
 xi(5+NT:4+(2*NT)) = max(xi(5+NT:4+(2*NT)),0);
 
-options = odeset('RelTol',1e-3);
+options = odeset('RelTol',1e-6);
 %[~ ,X] = ode23tb(@bubble, [ti_star tf_star], xi(1:end-2)',options);
 [~ ,X] = ode23tb(@bubble, [ti_star tf_star], xi(1:2*NT+NTM+4)');
 
@@ -327,7 +327,7 @@ xf(3) = log(xf(3));
             end
             %if fungexp==0
             udot = ((1+U/C_star)...
-                *(P  + abs(1-Cgrad)*Pv -1/(We*R) + S - 1 - Pext)  ...
+                *(P  + abs(1-Cgrad)*Pv - 1 - Pext -1/(We*R) + S)  ...
                 + R/C_star*(pdot+ U/(We*R^2) + Sdot -P_ext_prime ) ...
                 - 1.5*(1-U/(3*C_star))*U^2)/((1-U/C_star)*R);%+JdotA/(C_star));
             
