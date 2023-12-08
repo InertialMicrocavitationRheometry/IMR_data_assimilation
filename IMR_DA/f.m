@@ -61,10 +61,6 @@ xf(3) = log(xf(3));
         C = x((NT+5):(2*NT+4));
         Tm = x((2*NT+5):end);
         
-        %if (disptime == 1)
-        %    disp(t/tspan_star);
-        %end
-        
         %*********Solves for boundary condition at the wall**************
         if (Tmgrad == 1)
             if t/tspan_star> 0.001
@@ -138,7 +134,6 @@ xf(3) = log(xf(3));
         %end
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
-        
         if strcmp(Pext_type,'IC')
             Pext = 0;
             P_ext_prime = 0;
@@ -149,7 +144,6 @@ xf(3) = log(xf(3));
         
         % *****************************************
         % Create derivative terms
-        
         % Temp. field of the gas inside the bubble
         DTau  = D_Matrix_T_C*Tau;
         DDTau = DD_Matrix_T_C*Tau;
@@ -164,24 +158,12 @@ xf(3) = log(xf(3));
         
         %***************************************
         % Internal pressure equation
-        %pdot = 3/R*(Tgrad*chi*(k-1)*DTau(end)/R - k*P*U +...
-        %    + Cgrad*k*P*fom*Rv_star*DC(end)/( T(end)*R* Rmix(end)* (1-C(end)) ) );
         pdot = 3/R*(Tgrad*chi*(k-1)*DTau(end)/R - k*P*U +...
             + Cgrad*k*P*fom*Rv_star*DC(end)/( R* Rmix(end)* (1-C(end)) ))  ;
         % *****************************************
         
         %***************************************
         % Temperature of the gas inside the bubble
-        %U_vel = (chi/R*(k-1).*DTau-yk*R*pdot/3)/(k*P);
-        %first_term = (DDTau.*chi./R^2+pdot).*(K_star.*T/P*(k-1)/k);
-        %second_term = -DTau.*(U_vel-yk*U)./R;
-        
-        %Tau_prime = first_term+second_term;
-        %Tau_prime(end) = 0;
-        %Tau_prime = Tau_prime*Tgrad;
-        
-        % Temperature of the gas inside the bubble
-        % U_vel = (chi/R*(k-1).*DTau-yk*R*pdot/3)/(k*P);
         U_vel = (chi/R*(k-1).*DTau-yk*R*pdot/3)/(k*P) + fom/R*(Rv_star-Ra_star)./Rmix.*DC;
         first_term = ((DDTau ).*chi./R^2+pdot).*(K_star.*T/P*(k-1)/k);
         second_term = -DTau.*(U_vel-yk*U)./R;
@@ -195,31 +177,15 @@ xf(3) = log(xf(3));
             Tau_prime(end) = 0; % What is K?
         end
         Tau_prime = Tau_prime*Tgrad;
-        
         % *****************************************
         
-        %***************************************
-        % Vapor concentration equation
-        %U_mix = U_vel + fom/R*((Rv_star - Ra_star)./Rmix).*DC;
-        %one = DDC;
-        %two = DC.*(DTau./(K_star.*T)+((Rv_star - Ra_star)./Rmix).*DC );
-        %three =  (U_mix-U.*yk)/R.*DC;
-        %
-        % C_prime = fom/R^2*(one - two) - three;
-        % C_prime(end) = 0;
-        % C_prime = C_prime*Cgrad;
-        
+        %***************************************      
         % Vapor concentration equation
         U_mix = U_vel; % + fom/R*((Rv_star - Ra_star)./Rmix).*DC;
         one = DDC;
         % % JY!!!  %
         %two = DC.*( -((Rv_star - Ra_star)./Rmix).*DC - DTau./(K_star.*T) );
         two = DC.*( -((Rv_star - Ra_star)./Rmix).*DC - DTau./sqrt(1+2*A_star.*Tau)./T );
-        %tempdata = sqrt(1+2*A_star.*Tau);
-        %disp('======')
-        %[Tau(1:40),tempdata(1:40),K_star(1:40)]
-        %disp('======')
-        
         three = (U_mix-U.*yk)/R.*DC;
         
         % % JY!!! % C_prime = fom/R^2*(one - two) - three;
@@ -229,15 +195,6 @@ xf(3) = log(xf(3));
         %*****************************************
         
         %***************************************
-        % Material temperature equations
-        %first_term = (1+xk).^2./(L*R).*(U./yk2.^2.*(1-yk2.^3)/2+foh/R.*((xk+1)/(2*L)-1./yk2)).* DTm;
-        %second_term = foh/R^2.*(xk+1).^4/L^2.*DDTm/4;
-        %third_term =  3*Br./yk2.^6.*(4/(3*Ca).*(1-1/R^3)+4.*U/(Re.*R)).*U./R;
-        %Tm_prime = first_term+second_term+third_term;
-        %Tm_prime(end) = 0; % Sets boundary condition on temp
-        %Tm_prime(1) = 0; % Previously calculated;
-        %Tm_prime = Tm_prime*Tmgrad; %Tmgrad makes this quantity zero
-        
         % Material temperature equations
         first_term = (1+xk).^2./(L*R).*(U./yk2.^2.*(1-yk2.^3)/2+foh/R.*((xk+1)/(2*L)-1./yk2)).* DTm;
         second_term = foh/(R^2).*(xk+1).^4/L^2.*(DDTm)/4; %JY???
@@ -250,57 +207,6 @@ xf(3) = log(xf(3));
         Tm_prime(1) = 0; % Previously calculated;
         Tm_prime = Tm_prime*Tmgrad; %Tmgrad makes this quantity zero
         %*****************************************
-        
-        %***************************************
-        %{
-        % Elastic stress in the material
-        if linkv == 1
-            if  strcmp(Pext_type,'IC')
-                Rst = R/REq;
-                S = -4/(3*Ca)*(1 - 1/Rst^3) - 4/Re*U/R;
-                Sdot =  -4/Ca*U/R/Rst^3 + 4/Re*U^2/R^2;
-            else
-                S = -4/(3*Ca)*(1 - 1/R^3) - 4/Re*U/R;
-                Sdot =  -4/Ca*U/R^4 + 4/Re*U^2/R^2;
-            end
-        elseif neoHook == 1
-            if  strcmp(Pext_type,'IC')
-                Rst = R/REq;
-                S = -(5 - 4/Rst - 1/Rst^4)/(2*Ca) - 4/Re*U/R ;
-                Sdot =  -2*U/R*(1/Rst + 1/Rst^4)/Ca + 4/Re*U^2/R^2;
-            else
-                S = -(5 -4/R - 1/R^4)/(2*Ca) - 4/Re*U/R;
-                Sdot =  -2*U*(1/R^2 + 1/R^5)/Ca + 4/Re*U^2/R^2;
-            end
-        elseif sls == 1
-            if  strcmp(Pext_type,'IC')
-                Rst = R/REq;
-                Sdot = -S/De - 4*(1-1/Rst^3)/(3*Ca*De) - 4/(Re*De)*U/R - 4*U/(Ca*R);
-            else
-                Sdot = -S/De - 4*(1-1/R^3)/(3*Ca*De) - 4/(Re*De)*U/R - 4*U/(Ca*R);
-            end
-        elseif nhzen == 1
-            if  strcmp(Pext_type, 'IC')
-                Rst = R/REq;
-                Sdot = -S/De - 1/(2*Ca*De)*(5-1/Rst^4-4/Rst)-4*U/(R*Re*De)...
-                    -4*U/(R*Ca)/(Rst^3-1)*(3/14*Rst^3+Rst^2-3/(2*Rst)+2/(7*Rst^4));
-                if isinf(Sdot)
-                    Rst=Rst+eps;
-                    Sdot = -S/De - 1/(2*Ca*De)*(5-1/Rst^4-4/Rst)-4*U/(R*Re*De)...
-                        -4*U/(R*Ca)/(Rst^3-1)*(3/14*Rst^3+Rst^2-3/(2*Rst)+2/(7*Rst^4));
-                end
-            else
-                Sdot = -S/De - 1/(2*Ca*De)*(5-1/R^4-4/R)-4*U/(R*Re*De)...
-                    -4*U/(R*Ca)/(R^3-1)*(3/14*R^3+R^2-3/(2*R)+2/(7*R^4));
-                if isinf(Sdot)||isnan(Sdot)
-                    R = R+eps;
-                    Sdot = -S/De - 1/(2*Ca*De)*(5-1/R^4-4/R)-4*U/(R*Re*De)...
-                        -4*U/(R*Ca)/(R^3-1)*(3/14*R^3+R^2-3/(2*R)+2/(7*R^4));
-                end
-            end
-        end
-        %}
-        
         % Elastic stress in the material
         if linkv == 1
             if  strcmp(Pext_type,'IC')
@@ -337,26 +243,6 @@ xf(3) = log(xf(3));
             else
                 disp('Not finished in non-IC case for Fung model!')
             end
-            % ====== JY!!! First order Fung G + first order mu model approx ======
-            % % alpha = 0; lambda_nu = 0.001;
-            % Lv = 1;
-            %
-            % zeta = linspace(-1,0.99,200);
-            %
-            % tempr = R*( (2./(1-zeta)-1)*Lv + 1 );
-            % tempr0 = (tempr.^3+R0^3-R^3).^(1/3);
-            % gammadot = -0.5*( 2*(tempr0.^2)./(tempr.^3) + 1./tempr0 ) *R^2./(tempr.^2) * U;
-            % % figure; plot(zeta,gammadot); pause;
-            % % tempmu = 1/Re .* heaviside(-abs(gammadot)+1/lambda_nu) .* (1-lambda_nu^2*(gammadot.^2));
-            % tempmu = 1/Re .* exp(-lambda_nu^2*(gammadot.^2));
-            % tempS = -12*2*tempmu*U/R .* (1-zeta).^2 ./ (2+(1-zeta)*(1/Lv-1)).^4 /(Lv^3);
-            %
-            % S = -(1-3*alpha)*(5 - 4/Rst - 1/Rst^4)/(2*Ca) - ...
-            %     2*alpha*(-27/40 - 1/8/Rst^8 - 1/5/Rst^5 -1/Rst^2 + 2*Rst)/(Ca) + ...
-            %     trapz(zeta,tempS);
-            %
-            % Sdot = -2*U/R*(1-3*alpha)*(1/Rst + 1/Rst^4)/Ca - ...
-            %      2*alpha*U/R*(1/Rst^8 + 1/Rst^5 + 2/Rst^2 + 2*Rst)/(Ca) + 4/Re*U^2/R^2;
         elseif fung2 == 1
             if  strcmp(Pext_type,'IC')
                 Rst = R/REq;
@@ -374,7 +260,6 @@ xf(3) = log(xf(3));
             else
                 disp('Not finished in non-IC case for Fung2 model!')
             end
-            
         elseif fungexp == 1
             if  strcmp(Pext_type,'IC')
                 Rst = R/REq;
@@ -386,9 +271,7 @@ xf(3) = log(xf(3));
                     4/Re*U^2/R^2;
             else
                 disp('Not finished in non-IC case for Fung2 model!')
-            end
-            
-            
+            end         
         elseif sls == 1
             if  strcmp(Pext_type,'IC')
                 Rst = R/REq;
@@ -396,7 +279,6 @@ xf(3) = log(xf(3));
             else
                 Sdot = -S/De - 4*(1-1/R^3)/(3*Ca*De) - 4/(Re*De)*U/R - 4*U/(Ca*R);
             end
-            
         elseif nhzen == 1
             if  strcmp(Pext_type, 'IC')
                 Rst = R/REq;
@@ -418,8 +300,7 @@ xf(3) = log(xf(3));
             end
         end
         
-        %****************************************************
-        
+        %**************************************************** 
         % Equations of motion
         rdot = U;
         
@@ -521,15 +402,12 @@ xf(3) = log(xf(3));
             p = -Pext_Amp_Freq(1)*exp(-(t-dt_star).^2/tw_star^2);
         end
     end
-
 % time derivative of acoustic pressure
     function pdot = pfdot(t)
         if t<(dt_star-5*tw_star) || t>(dt_star+5*tw_star)
             pdot=0;
         else
             pdot = 2*(t-dt_star)/tw_star^2*Pext_Amp_Freq(1).*exp(-(t-dt_star).^2/tw_star^2);
-        end
-        
+        end 
     end
-
 end
