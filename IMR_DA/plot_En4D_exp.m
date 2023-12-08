@@ -69,14 +69,14 @@ muErrorTable.Properties.VariableNames = ColumnNames
 %}
 xf = [x1,squeeze(mean(E2,2))];
 
-disp(['G estimate: ',num2str(G_est(end))])
-disp(['mu estimate: ',num2str(mu_est(end))])
-disp(['De estimate: ',num2str(De_est(end))])
-disp(['alpha estimate: ',num2str(alpha_est(end))])
-disp(['lambda_nu estimate: ',num2str(lambda_nu_est(end))])
+%disp(['G estimate: ',num2str(G_est(end))])
+%disp(['mu estimate: ',num2str(mu_est(end))])
+%disp(['De estimate: ',num2str(De_est(end))])
+%disp(['alpha estimate: ',num2str(alpha_est(end))])
+%disp(['lambda_nu estimate: ',num2str(lambda_nu_est(end))])
 
-disp(['run time: ',num2str(round(run_time)),' seconds or ', ...
-    num2str(round(run_time/60)),' minutes'])
+%disp(['run time: ',num2str(round(run_time)),' seconds or ', ...
+%    num2str(round(run_time/60)),' minutes'])
 
 %% Ensemble statistics
 
@@ -134,11 +134,11 @@ mu_plussigma = (P_inf*R0)./(Re_plussigma.*Uc);
 
 %% Other metrics to plot
 R_err = abs(xf(1,:)-yth(1:time_index));
-avg_R_err = mean(R_err)
+avg_R_err = mean(R_err);
 R_percent_err = 100*(R_err./yth(1:time_index));
 avg_R_percent_err = mean(R_percent_err);
 RMSE = sqrt(mean(R_err.^2));
-NRMSE = RMSE/(mean(yth(1:time_index)))
+NRMSE = RMSE/(mean(yth(1:time_index)));
 
 %% Full radius curve (for cropped data assimilation window cases)
 %{
@@ -529,9 +529,9 @@ hold on
 %plot(1:length(xth(1,:)),xth(1,:),'k-','linewidth',2)
 plot(t(j_range),yth(j_range),'rx','linewidth',2)
 plot(t(j_range),xf(1,j_range),'bo-')
-%fill([t(j_range)./t0,fliplr(t(j_range)./t0)],[x_min(1,j_range),fliplr(x_max(1,j_range))], ...
+%fill([t(j_range),fliplr(t(j_range))],[x_min(1,j_range),fliplr(x_max(1,j_range))], ...
 %    'b','FaceAlpha',0.2,'EdgeColor','none')
-%fill([t(j_range)./t0,fliplr(t(j_range)./t0)],[x_minsigma(1,j_range),fliplr(x_plussigma(1,j_range))], ...
+%fill([t(j_range),fliplr(t(j_range))],[x_minsigma(1,j_range),fliplr(x_plussigma(1,j_range))], ...
 %    'b','FaceAlpha',0.1,'EdgeColor','none')
 %xlim([0 t(length(j_range))./t0])
 legend('measurement','4Dvar estimate','ensemble','location','northwest')

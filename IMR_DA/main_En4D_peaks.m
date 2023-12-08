@@ -121,9 +121,9 @@ for j = 1
             HA2(:,:,kk) = y2(:,:,kk) - y2b(:,kk)*ones(1,q);
             HA2(:,:,kk) = HA2(:,:,kk)*TTinv;
             dy2(:,kk) = yth(:,time_index+kk) - y2b(:,kk);
-            if disp_timesteps == 1
-                disp(['iteration ',num2str(jj),', timestep ',num2str(kk),'/',num2str(l)])
-            end
+            %if disp_timesteps == 1
+            %    disp(['iteration ',num2str(jj),', timestep ',num2str(kk),'/',num2str(l)])
+            %end
         end
         
         Rinv = linsolve(R,eye(size(R)));
@@ -152,8 +152,8 @@ for j = 1
         x_est(:,jj) = x1;
         timestep_time(jj) = toc;
         %tracking_plots_4Dvar;
-        disp(['ended iteration ',num2str(jj),' with norm(dx1) = ', ...
-            num2str(norm(dx1)),' at ',num2str(timestep_time(jj)),' seconds'])
+        %disp(['ended iteration ',num2str(jj),' with norm(dx1) = ', ...
+        %    num2str(norm(dx1)),' at ',num2str(timestep_time(jj)),' seconds'])
         jj = jj+1;
     end
     

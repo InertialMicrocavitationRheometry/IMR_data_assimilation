@@ -20,7 +20,7 @@ if length(t(1,:)) == 1
     t = t';
 end
 
-Rexp = Rnew*3.18e-4;%*1e-6;
+Rexp = Rnew;%*3.18e-4;%*1e-6;
 [R0,max_index] = max(Rexp);
 %yth = Rnew;
 yth = Rexp(max_index:end)./R0;

@@ -41,7 +41,6 @@ opts.SYM = true;
 % Pre-allocating memory:
 x2 = zeros(N,q,n+1);
 
-
 t = linspace(0,tspan,n+1);
 x(:,:,1) = xi;
 

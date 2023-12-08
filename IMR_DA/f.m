@@ -40,7 +40,6 @@ options = odeset('RelTol',1e-3);
 %[~ ,X] = ode23tb(@bubble, [ti_star tf_star], xi(1:end-2)',options);
 [~ ,X] = ode23tb(@bubble, [ti_star tf_star], xi(1:2*NT+NTM+4)');
 
-X(end,:)
 xf = [X(end,:)';Br;foh;xi(2*NT+NTM+7:end)];
 xf(3) = log(xf(3));
 
@@ -62,9 +61,9 @@ xf(3) = log(xf(3));
         C = x((NT+5):(2*NT+4));
         Tm = x((2*NT+5):end);
         
-        if (disptime == 1)
-            disp(t/tspan_star);
-        end
+        %if (disptime == 1)
+        %    disp(t/tspan_star);
+        %end
         
         %*********Solves for boundary condition at the wall**************
         if (Tmgrad == 1)
