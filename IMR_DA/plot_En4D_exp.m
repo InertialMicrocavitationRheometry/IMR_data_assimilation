@@ -105,6 +105,7 @@ R_percent_err = 100*(R_err./yth(1:time_index));
 avg_R_percent_err = mean(R_percent_err);
 RMSE = sqrt(mean(R_err.^2));
 NRMSE = RMSE/(mean(yth(1:time_index)));
+MSE = RMSE^2
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Plotting
@@ -245,20 +246,20 @@ set(gca,'fontsize',20)
 % %%%% Paper plots June 29
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % % Radius with normalized time
-% figure(111)
-% clf
-% hold on
-% %plot(1:length(xth(1,:)),xth(1,:),'k-','linewidth',2)
-% plot(t(j_range)./t0,yth(j_range),'rx','linewidth',2)
-% plot(t(j_range)./t0,xf(1,j_range),'bo-')
-% fill([t(j_range)./t0,fliplr(t(j_range)./t0)],[x_min(1,j_range),fliplr(x_max(1,j_range))], ...
-%     'b','FaceAlpha',0.2,'EdgeColor','none')
-% fill([t(j_range)./t0,fliplr(t(j_range)./t0)],[x_minsigma(1,j_range),fliplr(x_plussigma(1,j_range))], ...
-%     'b','FaceAlpha',0.1,'EdgeColor','none')
-% xlim([0 t(length(j_range))./t0])
-% legend('measurement','4Dvar estimate','ensemble','location','northwest')
-% xlabel('$t^*$')
-% ylabel('$\frac{R}{R_{max}}$')
-% grid on
-% set(gca,'fontsize',20)
+figure(111)
+clf
+hold on
+%plot(1:length(xth(1,:)),xth(1,:),'k-','linewidth',2)
+plot(t(j_range)./t0,yth(j_range),'rx','linewidth',2)
+plot(t(j_range)./t0,xf(1,j_range),'bo-')
+fill([t(j_range)./t0,fliplr(t(j_range)./t0)],[x_min(1,j_range),fliplr(x_max(1,j_range))], ...
+    'b','FaceAlpha',0.2,'EdgeColor','none')
+fill([t(j_range)./t0,fliplr(t(j_range)./t0)],[x_minsigma(1,j_range),fliplr(x_plussigma(1,j_range))], ...
+    'b','FaceAlpha',0.1,'EdgeColor','none')
+xlim([0 t(length(j_range))./t0])
+legend('measurement','4Dvar estimate','ensemble','location','northwest')
+xlabel('$t^*$')
+ylabel('$\frac{R}{R_{max}}$')
+grid on
+set(gca,'fontsize',20)
 % %}

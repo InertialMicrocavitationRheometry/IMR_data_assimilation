@@ -18,7 +18,7 @@ data_type = 'exp'; % 'sim' or 'exp'
 data_set = 'SoftPA_nobeads';
 data_filepath = (['example_data/']);
 data_filename = 'normalized_unscaled_Experimental_Data_10PA_.06BIS.mat'; %'PolyAcry_12_48_08_updated.mat';% name of file containing R vs T data
-num_peaks = 5; % number of 'peaks' to assimilate in radius data
+num_peaks = 10; % number of 'peaks' to assimilate in radius data
                % (peaks = collapse points as in Estrada paper)
   
 % Data assimilation parameters
@@ -30,7 +30,7 @@ mu_guess = 0.05;
 alpha_guess = 0.5;
 lambda_nu_guess = 0.1;
 %}
-q = 8; %48; % Number of ensemble members
+q = 24; %48; % Number of ensemble members
 std = 0.05; % expected standard deviation of measurements;
 init_scheme = 2; % leave as 2, initializes ensemble with truth + noise
 

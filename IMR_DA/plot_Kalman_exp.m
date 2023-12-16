@@ -155,6 +155,7 @@ avg_R_percent_err = mean(R_percent_err);
 
 RMSE = sqrt(mean(R_err.^2));
 NRMSE = RMSE/(mean(yth(1:j)))
+MSE = RMSE^2
 
 disp(['avg R error: ',num2str(avg_R_err),' (',num2str(avg_R_percent_err), ...
     '%)']);
@@ -376,10 +377,10 @@ clf
 hold on
 plot(t(1:length(j_range)+3),yth(1:length(j_range)+3),'rx','linewidth',2)
 plot(t(j_range),x_est(1,j_range),'bo-')
-%fill([t(j_range)./t0,fliplr(t(j_range)./t0)],[x_min(1,j_range),fliplr(x_max(1,j_range))],'b','FaceAlpha',0.2,'EdgeColor','none')
-%fill([t(j_range)./t0,fliplr(t(j_range)./t0)],[x_min_sigma(1,j_range),fliplr(x_pls_sigma(1,j_range))],'b','FaceAlpha',0.2,'EdgeColor','none')
+fill([t(j_range),fliplr(t(j_range))],[x_min(1,j_range),fliplr(x_max(1,j_range))],'b','FaceAlpha',0.2,'EdgeColor','none')
+fill([t(j_range),fliplr(t(j_range))],[x_min_sigma(1,j_range),fliplr(x_pls_sigma(1,j_range))],'b','FaceAlpha',0.2,'EdgeColor','none')
 %xlim([0 t(length(j_range)+3)./t0])
-legend('data','Estimate','location','northeast')
+legend('data','Estimate','ensemble','location','northeast')
 xlabel('$t^*$')
 ylabel('$\frac{R}{R_{max}}$')
 grid on
